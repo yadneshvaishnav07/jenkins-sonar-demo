@@ -1,1 +1,1 @@
-# jenkins-sonar-demo
+# jenkins_pipeline_springboot_demo
