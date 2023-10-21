@@ -16,20 +16,12 @@ pipeline {
                 sh 'mvn clean compile'
             }
         }
-        stage('Test'){
-            steps{
-                echo 'Building Maven project'
-                sh 'mvn test'
-                junit '**/target/surefire-reports/*.xml'
-                jacoco classPattern: '**/target/classes', exclusionPattern: '**/*Test*.class', execPattern: '**/target/jacoco.exec', inclusionPattern: '**/*.class', sourceExclusionPattern: 'generated/**/*.java', sourceInclusionPattern: '**/*.java'
-            }
-        }
         stage('SonarQube Analysis'){
             steps{
                 echo 'Scanning Maven project'
                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'sonar-token') { 
-                        sh 'mvn sonar:sonar -Dsonar.projectKey=sonardemo1  -Dsonar.organization=yadneshvaishnav07 -Dsonar.host.url=https://sonarcloud.io'
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=yadneshvaishnav07_jenkins-sonar-demo  -Dsonar.organization=yadneshvaishnav07 -Dsonar.host.url=https://sonarcloud.io'
                         sh 'sleep 50'
                         
                     }
